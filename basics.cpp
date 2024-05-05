@@ -291,4 +291,48 @@ void runAsync() {
     loadMeshes();
 }
 
+void printName(const std::string& name) {
+    std::cout << name << '\n';
 }
+
+void fastStrings() {
+    PROFILE_THIS();
+    std::string name = "Abhinav Rathod. "; // need to be size > 16 to allocate on heap otherwise stack is used
+    std::string_view{name};
+    printName(name);
+
+    std::cout << allocCount << " allocations\n";
+}
+
+void slowStrings() {
+    PROFILE_THIS();
+    std::string name = "Abhinav Rathod. "; // need to be size > 16 to allocate on heap otherwise stack is used
+    std::string{name};
+    std::string{name};
+    std::string{name};
+    std::string{name};
+    std::string{name};
+    std::string{name};
+    std::string{name};
+
+    std::cout << allocCount << " allocations\n";
+}
+
+void testInstrumentor() {
+    Instrumentor::Get().BeginSession("test-main");
+
+    basics::fastStrings();
+    basics::slowStrings();
+
+    Instrumentor::Get().EndSession();
+}
+
+}
+
+// cannot overload new operator in a namespace
+void* operator new(size_t size) {
+    ++allocCount;
+    std::cout << "Allocating: " << allocCount << '\n';
+    return malloc(size);
+}
+

@@ -1,9 +1,15 @@
+#ifndef CPPPRACTICE_BASICS
+#define CPPPRACTICE_BASICS
+
 #include <stdint.h>
 #include <chrono>
 #include <iostream>
+#include "instrumentor.h"
 
 // This is to document some basics in c++ wiht the help of TheCherno Youtube C++ tutorials
 // Some of the code here is courtesy of The Cherno C++ Videos from Youtube
+
+static uint32_t allocCount = 0;
 
 namespace basics {
 
@@ -111,4 +117,11 @@ void anyUsage();
 
 void runAsync();
 
+void fastStrings();
+void slowStrings();
+
+// drop results.json in chrome://tracing/ in chrome browser
+void testInstrumentor();
+
 }
+#endif
