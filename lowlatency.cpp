@@ -8,6 +8,7 @@
 //     return gcd(b, a%b);
 // }
 
+namespace lowlatency {
 
 void runGCD() {
     // std::cout << 15%5 << '\n';
@@ -43,4 +44,6 @@ void runRank() {
     static_assert(Rank<decltype(mat)>::value == 2);
 
     static_assert(Rank<Emp[2][3][4][5]>::value == 4);
+}
+
 }

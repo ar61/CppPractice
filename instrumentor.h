@@ -21,9 +21,10 @@
 
 #define PROFILE 1
 #if PROFILE
-    #define PROFILE_THIS() InstrumentationTimer timer(__FUNCSIG__)
+    #define PROFILE_SCOPE(name) InstrumentationTimer timer##__LINE__(name)
+    #define PROFILE_FUNCTION() InstrumentationTimer timer(__FUNCSIG__)
 #else
-    #define PROFILE_THIS()
+    #define PROFILE_FUNCTION()
 #endif
 
 #include <string>

@@ -296,7 +296,7 @@ void printName(const std::string& name) {
 }
 
 void fastStrings() {
-    PROFILE_THIS();
+    PROFILE_FUNCTION();
     std::string name = "Abhinav Rathod. "; // need to be size > 16 to allocate on heap otherwise stack is used
     std::string_view{name};
     printName(name);
@@ -305,7 +305,7 @@ void fastStrings() {
 }
 
 void slowStrings() {
-    PROFILE_THIS();
+    PROFILE_FUNCTION();
     std::string name = "Abhinav Rathod. "; // need to be size > 16 to allocate on heap otherwise stack is used
     std::string{name};
     std::string{name};
@@ -322,7 +322,26 @@ void testInstrumentor() {
     Instrumentor::Get().BeginSession("test-main");
 
     basics::fastStrings();
-    basics::slowStrings();
+    basics::slowStrings();    
+    
+    {
+        PROFILE_SCOPE("STRING LOOPER");
+
+        std::string s;
+        for(int i = 0; i < 1000000; ++i) {
+            s = "test";
+        }
+    }
+
+    
+    {
+        PROFILE_SCOPE("LOOPER");
+
+        std::string s;
+        for(int i = 0; i < 1000000; ++i) {
+            s = "test";
+        }
+    }
 
     Instrumentor::Get().EndSession();
 }
