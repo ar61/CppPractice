@@ -8,9 +8,9 @@ void* operator new(size_t size) {
     return malloc(size);
 }
 
-void operator delete(void* data) {
+void operator delete(void* data, size_t size) {
     --allocated;
-    std::cout << "De-allocating\n";
+    std::cout << "De-allocating " << size << " bytes\n";
     free(data);
 }
 
